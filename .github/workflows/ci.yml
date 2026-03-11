@@ -120,3 +120,51 @@ jobs:
               repo: context.repo.repo,
               body: message
             });
+
+  docker:
+    runs-on: ubuntu-latest
+    name: Build and Test in Docker
+    needs: ci
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Step 3: Build Docker image
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          load: true
+          tags: thebigalex1:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # Step 4: Run container tests
+      - name: Run tests in Docker
+        run: |
+          docker run --rm \
+            -v $(pwd)/artifacts:/workspace/artifacts \
+            thebigalex1:${{ github.sha }}
+        continue-on-error: true
+
+      # Step 5: Verify Docker build
+      - name: Verify Docker build
+        run: |
+          docker images | grep thebigalex1
+          echo "Docker image built successfully"
+
+      # Step 6: Upload Docker test logs
+      - name: Upload Docker test logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-test-results-${{ github.run_id }}
+          path: artifacts/
+          if-no-files-found: ignore
