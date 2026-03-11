@@ -1,0 +1,34 @@
+# Environment
+.env
+.env.local
+*.conf.local
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.key
+*.pem
+tokens/
+secrets/
+
+# Dependencies
+node_modules/
+venv/
+.venv/
+
+# Build
+dist/
+build/
+*.o
