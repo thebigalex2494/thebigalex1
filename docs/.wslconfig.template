@@ -1,0 +1,62 @@
+# WSL2 Configuration Template
+# 
+# Location in Windows: %USERPROFILE%\.wslconfig
+# For WSL1/Ubuntu-20.04: %USERPROFILE%\.wsl.ubuntu.config
+#
+# Documentation: https://docs.microsoft.com/en-us/windows/wsl/wsl-config
+
+[wsl2]
+# Asignar máxima RAM a WSL2 (ajusta según tu disponibilidad)
+# Ej: 8GB, 16GB, 32GB
+memory=8GB
+
+# Memoria SWAP para WSL2
+# Ej: 1GB, 2GB
+swap=2GB
+
+# Número de procesadores virtuales
+# Máximo: núcleos disponibles en tu CPU
+processors=4
+
+# Permitir localhost forwarding desde Windows
+localhostForwarding=true
+
+# Kernel personalizado (opcional, para kernels compilados)
+# kernel=\\wsl.localhost\Ubuntu\boot\vmlinuz
+
+[interop]
+# Permitir interoperabilidad entre Windows y WSL
+enabled=true
+
+# Agregar ejecutables de Windows al PATH de WSL
+appendWindowsPath=true
+
+[boot]
+# Usar systemd como init system (requiere WSL2)
+# Disponible en Windows 11 21H2+
+systemd=true
+
+# Timeout para boot en segundos
+systemdFailureAction=none
+
+# ============================================
+# CONFIGURACIÓN ALTERNATIVA (BAJO RENDIMIENTO)
+# ============================================
+# 
+# Para sistemas con recursos limitados:
+# [wsl2]
+# memory=4GB
+# swap=1GB
+# processors=2
+#
+# ============================================
+# CONFIGURACIÓN PARA DESARROLLO PESADO
+# ============================================
+#
+# Para proyectos con Docker, Kubernetes, etc:
+# [wsl2]
+# memory=16GB
+# swap=4GB
+# processors=8
+# 
+# ============================================
